@@ -47,7 +47,7 @@ builder.Services.AddSingleton<ILogEventFilter>(sp =>
     // If the flag cannot be found, or if the value the flag returns is not parseable to an instance 
     // of LogEventLevel, this default level will be used.  Anything at or higher than this level will 
     // pass through to the Sink.
-    const LogEventLevel defaultLevel = LogEventLevel.Warning;
+    const LogEventLevel defaultLevel = LogEventLevel.Debug;
     return new ContextAwareLogEventFilter(flagName, defaultLevel, ldClient, contextProvider);
 });
 

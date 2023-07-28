@@ -27,6 +27,20 @@ public class ContextAwareLogEventFilter: ILogEventFilter
         var ldContext = _contextProvider.GetContext();
         var logLevelString = _ldClient.StringVariation(_flagName, ldContext, _defaultLevel.ToString())!;
         var isParsed = Enum.TryParse(logLevelString, out LogEventLevel logEventLevel);
-        return logEvent.Level.Equals(isParsed ? logEventLevel : _defaultLevel);
+        return ToInt(logEvent.Level) >= ToInt(isParsed ? logEventLevel : _defaultLevel);
+    }
+
+    private static int ToInt(LogEventLevel logEventLevel)
+    {
+        return logEventLevel switch
+        {
+            LogEventLevel.Verbose => 0,
+            LogEventLevel.Debug => 1,
+            LogEventLevel.Information => 2,
+            LogEventLevel.Warning => 3,
+            LogEventLevel.Error => 4,
+            LogEventLevel.Fatal => 5,
+            _ => -1,
+        };
     }
 }
